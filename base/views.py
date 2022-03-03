@@ -13,7 +13,25 @@ from django.contrib.auth import login, authenticate
 
 class ProblemList(LoginRequiredMixin, ListView):
     model = Problem
-    context_object_name = 'problem'
+    context_object_name = 'problems'
+
+    #restrict problem list view to user who created it
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['problems'] = context['problems'].filter(user=self.request.user)
+        return context
+
+class ProblemCreate(LoginRequiredMixin, CreateView):
+    model = Problem
+    #fields = '__all__' #keyword, list all items
+    fields = ['number','title']
+    success_url = reverse_lazy('problems') #redirect on successful create
+
+    #overwrite default method
+    #force create task user to be the logged in user
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ProblemCreate, self).form_valid(form)
     
 def login_view(request, *args, **kwargs):
     context = {}

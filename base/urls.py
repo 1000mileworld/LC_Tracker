@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProblemList, register_view, login_view
+from .views import ProblemList, ProblemCreate, register_view, login_view
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
@@ -23,7 +23,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset/password_reset_complete.html'), name='password_reset_complete'),
 
     # path('task/<int:pk>/', TaskDetail.as_view(), name='task'),
-    # path('task-create/', TaskCreate.as_view(), name='task-create'),
+    path('problem-create/', ProblemCreate.as_view(), name='problem-create'),
     # path('task-update/<int:pk>/', TaskUpdate.as_view(), name='task-update'),
     # path('task-delete/<int:pk>/', DeleteView.as_view(), name='task-delete'),
     # path('task-reorder/', TaskReorder.as_view(), name='task-reorder'),

@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <a href="{% url 'problems' %}">&#8592; Back</a>
+</div>
+
+<div class="card-body">
+    <form method="POST" action="">
+        <!-- default object: form -->
+        <!-- form.as_p puts form fields in paragraph tags -->
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="button" type="submit" value="Submit"/>
+    </form>
+</div>
+{% endblock content %}

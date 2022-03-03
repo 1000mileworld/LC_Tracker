@@ -1,6 +1,10 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<!-- {% include "base/header.html" %} -->
-problems
+<div><a href="{% url 'problem-create' %}">Add Problem</a></div>
+<ul>
+    {% for problem in problems %}
+    <li>{{problem}}</li>
+    {% endfor %}
+</ul>
 {% endblock content %}
