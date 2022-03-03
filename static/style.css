@@ -1,0 +1,22 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+}
+
+header{
+    padding: 15px;
+}
+
+.content {
+    background-color: #EEEAE9;
+    flex: 1
+}
+
+footer{
+    margin-top: auto;
+    padding: 20px;
+    min-height: 60px;
+    text-align: center;
+    border: 1px solid;
+}
