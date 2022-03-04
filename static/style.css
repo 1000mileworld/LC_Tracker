@@ -20,3 +20,7 @@ footer{
     text-align: center;
     border: 1px solid;
 }
+
+.errorlist {
+    display: none;
+}

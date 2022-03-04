@@ -7,8 +7,10 @@ from .models import Problem
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegistrationForm, AccountAuthenticationForm
+from .forms import ProblemCreateForm
 
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponseRedirect
 
 class ProblemList(LoginRequiredMixin, ListView):
     model = Problem
@@ -24,17 +26,34 @@ class ProblemDetail(LoginRequiredMixin, DetailView):
     model = Problem
     context_object_name = 'problem'
 
-class ProblemCreate(LoginRequiredMixin, CreateView):
-    model = Problem
-    #fields = '__all__' #keyword, list all items
-    fields = ['number','title']
-    success_url = reverse_lazy('problems') #redirect on successful create
+# class ProblemCreate(LoginRequiredMixin, CreateView):
+#     model = Problem
+#     #fields = '__all__' #keyword, list all items
+#     fields = ['number','title']
+#     success_url = reverse_lazy('problems') #redirect on successful create
 
-    #overwrite default method
-    #force create task user to be the logged in user
+#     #overwrite default method
+#     #force create task user to be the logged in user
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super(ProblemCreate, self).form_valid(form)
+
+class ProblemCreate(LoginRequiredMixin, CreateView):
+    #model, fields, success url specified in ProblemCreateForm
+    template_name = 'base/problem_form.html'
+    form_class = ProblemCreateForm
+
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(ProblemCreate, self).form_valid(form)
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    #pass user back to form
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(ProblemCreate, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class ProblemUpdate(LoginRequiredMixin, UpdateView):
     model = Problem

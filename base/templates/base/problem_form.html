@@ -10,7 +10,25 @@
         <!-- default object: form -->
         <!-- form.as_p puts form fields in paragraph tags -->
         {% csrf_token %}
-        {{form.as_p}}
+        <!-- {{form.as_p}} -->
+        <div class="">
+            <label for="number">Number</label>
+            <input type="number" name="number" min="1">
+        </div>
+
+        <div class="">
+            <label for="title">Title</label>
+            <input type="text" name="title">
+        </div>
+
+        {% for field in form %}
+            <p>
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+        {% endfor %}
+
         <input class="button" type="submit" value="Submit"/>
     </form>
 </div>
