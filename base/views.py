@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Problem
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegistrationForm, AccountAuthenticationForm
-from django.http import HttpResponse
 
 from django.contrib.auth import login, authenticate
 
@@ -21,6 +20,10 @@ class ProblemList(LoginRequiredMixin, ListView):
         context['problems'] = context['problems'].filter(user=self.request.user)
         return context
 
+class ProblemDetail(LoginRequiredMixin, DetailView):
+    model = Problem
+    context_object_name = 'problem'
+
 class ProblemCreate(LoginRequiredMixin, CreateView):
     model = Problem
     #fields = '__all__' #keyword, list all items
@@ -32,7 +35,20 @@ class ProblemCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ProblemCreate, self).form_valid(form)
-    
+
+class ProblemUpdate(LoginRequiredMixin, UpdateView):
+    model = Problem
+    fields = ['number','title']
+    success_url = reverse_lazy('problems')
+
+class DeleteView(LoginRequiredMixin, DeleteView):
+    model = Problem
+    context_object_name = 'problem'
+    success_url = reverse_lazy('problems')
+    def get_queryset(self):
+        owner = self.request.user
+        return self.model.objects.filter(user=owner)
+
 def login_view(request, *args, **kwargs):
     context = {}
     user = request.user

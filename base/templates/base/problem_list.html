@@ -4,7 +4,11 @@
 <div><a href="{% url 'problem-create' %}">Add Problem</a></div>
 <ul>
     {% for problem in problems %}
-    <li>{{problem}}</li>
+    <li>
+        <a href="{% url 'problem-detail' problem.id %}">{{problem}}</a>
+        <a href="{% url 'problem-update' problem.id %}">Edit</a>
+        <a href="{% url 'problem-delete' problem.id %}">Delete</a>
+    </li>
     {% endfor %}
 </ul>
 {% endblock content %}
