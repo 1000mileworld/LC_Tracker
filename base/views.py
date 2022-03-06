@@ -7,7 +7,7 @@ from .models import Problem
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegistrationForm, AccountAuthenticationForm
-from .forms import ProblemCreateForm
+from .forms import ProblemCreateForm, ProblemUpdateForm
 
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
@@ -26,18 +26,6 @@ class ProblemDetail(LoginRequiredMixin, DetailView):
     model = Problem
     context_object_name = 'problem'
 
-# class ProblemCreate(LoginRequiredMixin, CreateView):
-#     model = Problem
-#     #fields = '__all__' #keyword, list all items
-#     fields = ['number','title']
-#     success_url = reverse_lazy('problems') #redirect on successful create
-
-#     #overwrite default method
-#     #force create task user to be the logged in user
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super(ProblemCreate, self).form_valid(form)
-
 class ProblemCreate(LoginRequiredMixin, CreateView):
     #model, fields, success url specified in ProblemCreateForm
     template_name = 'base/problem_form.html'
@@ -55,15 +43,21 @@ class ProblemCreate(LoginRequiredMixin, CreateView):
         kwargs['user'] = self.request.user
         return kwargs
 
-class ProblemUpdate(LoginRequiredMixin, UpdateView):
+class ProblemUpdate(LoginRequiredMixin, UpdateView):    
     model = Problem
-    fields = ['number','title']
-    success_url = reverse_lazy('problems')
+    form_class = ProblemUpdateForm
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(ProblemUpdate, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = self.request.user
+        kwargs['id'] = self.kwargs['pk']
+        return kwargs
 
 class DeleteView(LoginRequiredMixin, DeleteView):
     model = Problem
     context_object_name = 'problem'
     success_url = reverse_lazy('problems')
+    
     def get_queryset(self):
         owner = self.request.user
         return self.model.objects.filter(user=owner)
@@ -97,7 +91,7 @@ def register_view(request, *args, **kwargs):
 	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
-			form.save() #creat account, then login below
+			form.save() #create account, then login below
 			email = form.cleaned_data.get('email').lower()
 			raw_password = form.cleaned_data.get('password1')
 			account = authenticate(email=email, password=raw_password)
@@ -105,7 +99,6 @@ def register_view(request, *args, **kwargs):
 			return redirect('problems')
 		else:
 			context['registration_form'] = form
-
 	else:
 		form = RegistrationForm()
 		context['registration_form'] = form

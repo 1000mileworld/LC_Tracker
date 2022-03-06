@@ -10,8 +10,8 @@
         <!-- default object: form -->
         <!-- form.as_p puts form fields in paragraph tags -->
         {% csrf_token %}
-        <!-- {{form.as_p}} -->
-        <div class="">
+        {{form.as_p}}
+        <!-- <div class=""> these don't have values in them presaved
             <label for="number">Number</label>
             <input type="number" name="number" min="1">
         </div>
@@ -19,7 +19,7 @@
         <div class="">
             <label for="title">Title</label>
             <input type="text" name="title">
-        </div>
+        </div> -->
 
         {% for field in form %}
             <p>
