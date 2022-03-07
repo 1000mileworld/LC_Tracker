@@ -8,6 +8,13 @@
 
 <div class="card-body">
     <h1>{{problem}}</h1>
+    <a href={{problem.link}} target="_blank">Go to Problem</a>
+    <div>Self Difficulty Rating: {{problem.rating}}</div>
+    <div>Category Tags: {{problem.categories}}</div>
+    <div>Company Tags: {{problem.companies}}</div>
+    <div>Notes: {{problem.notes}}</div>
+    <div>Last Solved Date: {{problem.last_solved}}</div>
+    <div>Next Solve Date: {{problem.next_solve}}</div>
 </div>
 
 {% endblock content %}

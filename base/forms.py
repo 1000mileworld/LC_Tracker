@@ -4,7 +4,7 @@ from .models import Problem
 class ProblemCreateForm(forms.ModelForm):
     class Meta:
         model = Problem
-        exclude = ('user',) #specifies what fields from the model not to include in the form.
+        exclude = ('user','next_solve') #specifies what fields from the model not to include in the form.
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -23,16 +23,16 @@ class ProblemCreateForm(forms.ModelForm):
             raise forms.ValidationError("You have already added a problem with the same title.")
         return title
 
-    def clean_url(self):
-        url = self.cleaned_data['url']
-        if Problem.objects.filter(user=self.user, url__iexact=url).exists():
-            raise forms.ValidationError("You have already added a problem with the same title.")
-        return url
+    def clean_link(self):
+        link = self.cleaned_data['link']
+        if Problem.objects.filter(user=self.user, link__iexact=link).exists():
+            raise forms.ValidationError("You have already added a problem with the same link.")
+        return link
 
 class ProblemUpdateForm(forms.ModelForm):
     class Meta:
         model = Problem
-        exclude = ('user',) #specifies what fields from the model not to include in the form.
+        exclude = ('user','next_solve') #specifies what fields from the model not to include in the form.
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -54,9 +54,9 @@ class ProblemUpdateForm(forms.ModelForm):
                 raise forms.ValidationError("Cannot update: problem with same title already exists.")
         return title
 
-    def clean_url(self):
-        url = self.cleaned_data['url']
-        if Problem.objects.filter(user=self.user, url__iexact=url).exists():
-            if Problem.objects.filter(user=self.user, url__iexact=url).values('id')[0]['id']!=self.id:
-                raise forms.ValidationError("Cannot update: problem with same URL already exists.")
-        return url
+    def clean_link(self):
+        link = self.cleaned_data['link']
+        if Problem.objects.filter(user=self.user, link__iexact=link).exists():
+            if Problem.objects.filter(user=self.user, link__iexact=link).values('id')[0]['id']!=self.id:
+                raise forms.ValidationError("Cannot update: problem with same link already exists.")
+        return link
