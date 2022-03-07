@@ -5,17 +5,28 @@
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.2/dist/js/tabulator.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.1.1/luxon.min.js" integrity="sha512-R3qVfQx4LUWixeZgtptH0NDb+/FB8qVflpPQUKzDQlz1zKE3BiN4wG3aBUwzabgMo/45MXHucjcC2/BWBxMJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<div><a href="{% url 'problem-create' %}">Add Problem</a></div>
-<!-- <ul>
-    {% for problem in problems %}
-    <li>
-        <a href="{% url 'problem-detail' problem.id %}">{{problem}}</a>
-        <a href="{% url 'problem-update' problem.id %}">Edit</a>
-        <a href="{% url 'problem-delete' problem.id %}">Delete</a>
-    </li>
-    {% endfor %}
-</ul> -->
+{% load static %}
+<link href="{% static 'evo-calendar.css' %}" rel="stylesheet">
+<link href="{% static 'evo-calendar.midnight-blue.css' %}" rel="stylesheet">
+<script src="{% static 'evo-calendar.js' %}"></script>
+<style>
+    .event-container > .event-icon > div.event-bullet-easy,
+    .event-indicator > .type-bullet > div.type-easy {
+        background-color: green;
+    }
+    .event-container > .event-icon > div.event-bullet-medium,
+    .event-indicator > .type-bullet > div.type-medium {
+        background-color: orange;
+    }
+    .event-container > .event-icon > div.event-bullet-hard,
+    .event-indicator > .type-bullet > div.type-hard {
+        background-color: red;
+    }
+</style>
 
+<div><a href="{% url 'problem-create' %}">Add Problem</a></div> Add stats!
+
+<!------------------------------ Table ----------------------------------->
 <div>
     <select id="filter-field">
       <option value="number">Number</option>
@@ -43,72 +54,31 @@
 </div>
 <div id="problem-table"></div>
 
-<script>
-    const my_problems = {{problems_json | safe}}
-    var tabledata = []
-    for (const problem of my_problems) {
-        tabledata.push(problem)
-    }
-    //console.log(tabledata)
+<!------------------------------ Calendar ----------------------------------->
+<!-- include today option + new page of whether user solved problem -->
+<p>Pick how many days you would like to generate problems for and how many problems per day:</p>
+<form method="POST" action="">
+    {% csrf_token %}
+    <label for="days">Number of Days</label>
+    <input type="number" name="days" min="1" max="100" required><br>
 
-    //Define variables for input elements
-    var fieldEl = document.getElementById("filter-field");
-    var typeEl = document.getElementById("filter-type");
-    var valueEl = document.getElementById("filter-value");
+    <label for="num-problems">Number of Problems</label>
+    <input type="number" name="num-problems" min="1" max="30" required><br>
 
-    //Trigger setFilter function with correct parameters
-    function updateFilter(){
-        var filterVal = fieldEl.options[fieldEl.selectedIndex].value;
-        var typeVal = typeEl.options[typeEl.selectedIndex].value;
-        var filter = filterVal;
-        if(filterVal){
-            table.setFilter(filter,typeVal,valueEl.value);
-        }
-    }
+    <input type="checkbox" name="today" value="today">
+    <label for="today">Include today?</label><br>
 
-    //Update filters on value change
-    document.getElementById("filter-field").addEventListener("change", updateFilter);
-    document.getElementById("filter-type").addEventListener("change", updateFilter);
-    document.getElementById("filter-value").addEventListener("keyup", updateFilter);
+    <input type="checkbox" name="overwrite" value="overwrite">
+    <label for="overwrite">Overwrite existing?</label><br>
 
-    //Clear filters on "Clear Filters" button click
-    document.getElementById("filter-clear").addEventListener("click", function(){
-    fieldEl.value = "title";
-    typeEl.value = "like";
-    valueEl.value = "";
+    <input style="margin-top:10px ;" class="button" type="submit" value="Generate">
+</form>
+<div id="calendar"></div>
 
-    table.clearFilter();
-    });
 
-    //create Tabulator on DOM element
-    var table = new Tabulator("#problem-table", {
-        //height:250, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-        data:tabledata, //assign data to table
-        layout:"fitColumns", //fit columns to width of table (optional)
-        columns:[ //Define Table Columns
-        {title:"Number", field:"number"},    
-        {title:"Title", field:"title"},
-        {title:"Difficulty", field:"difficulty"},
-        {title:"DS/Algo", field:"categories"},
-        {title:"Self Rating", field:"rating"},
-        {title:"Company", field:"companies"},
-        {title:"Last Solved", field:"last_solved"},
-
-            // {title:"Age", field:"age", hozAlign:"left", formatter:"progress"},
-            // {title:"Favourite Color", field:"col"},
-            // {title:"Date Of Birth", field:"dob", sorter:"date"},
-        ],
-        pagination:true,
-        paginationSize:5,
-    });
-
-    table.on('rowClick', (e, row) => {
-        //console.log("Row " + row.getIndex() + " clicked")
-        //console.log(row.getData().name)
-        //id = row.getData().id
-        location.href = `problem/${row.getData().id}/`;
-    })
-</script>
-
+<script>const my_problems = {{problems_json | safe}}</script>
+{% load static %}
+<script src="{% static 'tabulator.js' %}"></script>
+<script src="{% static 'calendar.js' %}"></script>
 
 {% endblock content %}

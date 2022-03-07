@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import ProblemList, ProblemDetail, ProblemCreate, ProblemUpdate, DeleteView, register_view, login_view
+from .views import ProblemList, ProblemDetail, ProblemCreate, ProblemUpdate, DeleteView, register_view, login_view, problem_list_view, redo_view
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', ProblemList.as_view(), name='problems'),
+    #path('', ProblemList.as_view(), name='problems'),
+    path('', problem_list_view, name='problems'),
 
     path('login/', login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
@@ -26,4 +27,6 @@ urlpatterns = [
     path('problem-create/', ProblemCreate.as_view(), name='problem-create'),
     path('problem-update/<int:pk>/', ProblemUpdate.as_view(), name='problem-update'),
     path('problem-delete/<int:pk>/', DeleteView.as_view(), name='problem-delete'),
+
+    path('confirm-redo/<int:pk>', redo_view, name='redo'),
 ]

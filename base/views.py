@@ -7,7 +7,7 @@ from .models import Problem
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegistrationForm, AccountAuthenticationForm
-from .forms import ProblemCreateForm, ProblemUpdateForm
+from .forms import ProblemCreateForm, ProblemUpdateForm, GenerateProblemForm
 
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
@@ -15,6 +15,38 @@ from django.http import HttpResponseRedirect
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
+def redo_view(request, pk):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
+    return render(request, 'base/confirm_redo.html')
+
+def problem_list_view(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+    
+    context = {}
+    context['problems'] = Problem.objects.filter(user=user)
+    context['problems_json'] = json.dumps(list(context['problems'].values()), cls=DjangoJSONEncoder)
+    
+    if request.method == 'POST':
+        form = GenerateProblemForm(request.POST)
+        if form.is_valid():
+            days = request.POST['days']
+            num_problems = request.POST['num-problems']
+            if 'today' in request.POST:
+                print('today checked')
+            else:
+                print('do not include today')
+            
+            print(days, num_problems)
+            return redirect('/')
+
+    return render(request, 'base/problem_list.html', context)
+
+#switched to function view because it's easier to add a form to it
 class ProblemList(LoginRequiredMixin, ListView):
     model = Problem
     context_object_name = 'problems'
