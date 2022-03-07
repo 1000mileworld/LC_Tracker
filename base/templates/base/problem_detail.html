@@ -15,6 +15,8 @@
     <div>Notes: {{problem.notes}}</div>
     <div>Last Solved Date: {{problem.last_solved}}</div>
     <div>Next Solve Date: {{problem.next_solve}}</div>
+    <a href="{% url 'problem-update' problem.id %}">Edit</a>
+    <a href="{% url 'problem-delete' problem.id %}">Delete</a>
 </div>
 
 {% endblock content %}

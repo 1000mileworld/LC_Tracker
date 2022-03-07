@@ -7,9 +7,9 @@ User = settings.AUTH_USER_MODEL
 #from django.contrib.postgres.fields import ArrayField #only for Postgres
 from datetime import date
 DIFFICULTY_CHOICES = (
-    ('easy','Easy'),
-    ('medium', 'Medium'),
-    ('hard','Hard'),
+    ('Easy','Easy'),
+    ('Medium', 'Medium'),
+    ('Hard','Hard'),
 )
 
 RATING_CHOICES = (

@@ -12,6 +12,9 @@ from .forms import ProblemCreateForm, ProblemUpdateForm
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 class ProblemList(LoginRequiredMixin, ListView):
     model = Problem
     context_object_name = 'problems'
@@ -20,6 +23,7 @@ class ProblemList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['problems'] = context['problems'].filter(user=self.request.user)
+        context['problems_json'] = json.dumps(list(context['problems'].values()), cls=DjangoJSONEncoder)
         return context
 
 class ProblemDetail(LoginRequiredMixin, DetailView):
