@@ -7,7 +7,7 @@ from .models import Problem
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.forms import RegistrationForm, AccountAuthenticationForm
-from .forms import ProblemCreateForm, ProblemUpdateForm, GenerateProblemForm
+from .forms import ProblemCreateForm, ProblemUpdateForm, GenerateProblemForm, ConfirmRedoForm
 
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
@@ -15,14 +15,24 @@ from django.http import HttpResponseRedirect
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
-from .func import gen_problems
+from .func import gen_problems, shift_problems
 
 def redo_view(request, pk):
     user = request.user
     if not user.is_authenticated:
         return redirect('login')
 
-    return render(request, 'base/confirm_redo.html')
+    context = {}
+    if request.method == 'POST':
+        form = ConfirmRedoForm(request.POST, user=user, id=pk)
+        if form.is_valid():
+            if 'yes-redo' in request.POST:
+                form.save(request.POST['rating'])
+            return redirect('/')
+    else:
+        form = ConfirmRedoForm(user=user, id=pk)
+    context['redo_form'] = form
+    return render(request, 'base/confirm_redo.html', context)
 
 def problem_list_view(request):
     user = request.user
@@ -36,15 +46,11 @@ def problem_list_view(request):
     if request.method == 'POST':
         form = GenerateProblemForm(request.POST)
         if form.is_valid():
-            #days = request.POST['days']
-            num_problems = request.POST['num-problems']
-            gen_problems(int(num_problems), False)
-            # if 'today' in request.POST:
-            #     print('today checked')
-            # else:
-            #     print('do not include today')
-            
-            #print(days, num_problems)
+            if 'generate' in request.POST:
+                num_problems = request.POST['num-problems']
+                gen_problems(int(num_problems))
+            elif 'shift' in request.POST:
+                shift_problems()
             return redirect('/')
 
     return render(request, 'base/problem_list.html', context)
@@ -117,7 +123,7 @@ def login_view(request, *args, **kwargs):
                 login(request,user)
                 return redirect('problems')
     else:
-        form = AccountAuthenticationForm
+        form = AccountAuthenticationForm()
     context['login_form'] = form
     return render(request, "account/login.html", context)
 

@@ -56,28 +56,25 @@
 <div id="problem-table"></div>
 
 <!------------------------------ Calendar ----------------------------------->
-<!-- include today option + new page of whether user solved problem -->
-<p>Pick how many days you would like to generate problems for and how many problems per day:</p>
-<form method="POST" action="">
+<p>Pick the max number of problems you would like to do per day. Any days (including today) with more problems than the limit will be rebalanced. Any unsolved problems which was scheduled for days past will be given a new solve date. If you need to take a break today, you can shift all problems forward 1 day.</p>
+<form method="POST" action="" id="generate-form">
     {% csrf_token %}
-    <!-- <label for="days">Number of Days</label>
-    <input type="number" name="days" min="1" max="100" required><br> -->
+    <label for="num-problems">Max Problems</label>
+    <input id="problem-limit" type="number" name="num-problems" min="1" max="30" required><br>
 
-    <label for="num-problems">Number of Problems</label>
-    <input type="number" name="num-problems" min="1" max="30" required><br>
-
-    <!-- <input type="checkbox" name="today" value="today">
-    <label for="today">Include today?</label><br> -->
-
-    <input type="checkbox" name="overwrite" value="overwrite">
-    <label for="overwrite">Overwrite existing?</label><br>
-
-    <input style="margin-top:10px ;" class="button" type="submit" value="Generate">
+    <input class="button" type="submit" name="generate" value="Generate">
+    <input class="button" type="submit" name="shift" value="+1 Day" id="shift-button">
 </form>
 <div id="calendar"></div>
 
-
-<script>const my_problems = {{problems_json | safe}}</script>
+<script>
+    const my_problems = {{problems_json | safe}}
+    $(document).ready(function () {
+        $("#shift-button").on("click",function (e) {
+            document.getElementById("problem-limit").required = false;
+        });
+  });
+</script>
 {% load static %}
 <script src="{% static 'tabulator.js' %}"></script>
 <script src="{% static 'calendar.js' %}"></script>

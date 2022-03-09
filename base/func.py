@@ -1,4 +1,3 @@
-from xmlrpc.client import boolean
 from .models import Problem
 from itertools import chain
 from datetime import date, timedelta
@@ -15,7 +14,7 @@ RULES = {
 
 MAX_DAYS = 90 #program won't generate problems past this number of days in advance
 
-def gen_problems(problems_limit: int, overwrite: boolean) -> None:
+def gen_problems(problems_limit: int) -> None:
     null_dates = Problem.objects.filter(next_solve__isnull=True)
     old_dates = Problem.objects.filter(next_solve__lt=date.today())
     problem_list = list(chain(null_dates,old_dates))
@@ -26,7 +25,7 @@ def gen_problems(problems_limit: int, overwrite: boolean) -> None:
 
     move_problems = []
     changed_problems = []
-    for i in range(1,MAX_DAYS+1):
+    for i in range(MAX_DAYS):
         day = date.today()+timedelta(days=i)
         problems_today = Problem.objects.filter(next_solve=day)
         move_problems.extend(problems_today[problems_limit:]) #if there are more problems than allowed, append to list
@@ -44,3 +43,8 @@ def gen_problems(problems_limit: int, overwrite: boolean) -> None:
     changed_problems.extend(move_problems)
     Problem.objects.bulk_update(changed_problems, ['next_solve'])
 
+def shift_problems(): #by 1 day
+    has_dates = Problem.objects.filter(next_solve__isnull=False)
+    for problem in has_dates:
+        problem.next_solve = problem.next_solve+timedelta(days=1)
+    Problem.objects.bulk_update(has_dates, ['next_solve'])

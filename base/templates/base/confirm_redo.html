@@ -2,5 +2,11 @@
 {% block content %}
 
 <p>Did you redo this problem?</p>
+<form method="POST" action="" id="generate-form">
+    {% csrf_token %}
+    {{redo_form.as_p}}
+    <input class="button" type="submit" name="yes-redo" value="Yes">
+    <input class="button" type="submit" name="no-redo" value="No">
+</form>
 
 {% endblock content %}

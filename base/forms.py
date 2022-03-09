@@ -1,5 +1,6 @@
 from django import forms
 from .models import Problem
+from datetime import date
 
 class ProblemCreateForm(forms.ModelForm):
     class Meta:
@@ -62,24 +63,23 @@ class ProblemUpdateForm(forms.ModelForm):
         return link
 
 class GenerateProblemForm(forms.ModelForm):
-    
     class Meta:
         model = Problem
         fields = ('next_solve',)
     
-    def clean_today(self):
-        print(self.cleaned_data)
-        if 'today' not in self.cleaned_data:
-            return False
-        return True
+class ConfirmRedoForm(forms.ModelForm):
+    class Meta:
+        model = Problem
+        fields = ('rating',)
     
-    # def clean(self):
-    #     if self.is_valid():
-    #         number = self.cleaned_data['number']
-    #         num_problems = self.cleaned_data['num-problems']
-    #         try:
-    #             int(number)
-    #             int(num_problems)
-    #         except ValueError:
-    #             raise forms.ValidationError("Please enter integer values only.")
-	
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.id = kwargs.pop('id')
+        super(ConfirmRedoForm, self).__init__(*args, **kwargs)
+    
+    def save(self, rating):
+        problem = Problem.objects.get(user=self.user, pk=self.id)
+        problem.rating = rating
+        problem.last_solved = date.today()
+        problem.next_solve = None
+        problem.save()

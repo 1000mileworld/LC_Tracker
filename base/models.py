@@ -13,11 +13,11 @@ DIFFICULTY_CHOICES = (
 )
 
 RATING_CHOICES = (
-   ('1','1 (Easiest)'),
-   ('2','2'),
-   ('3','3'),
-   ('4','4'),
-   ('5','5 (Hardest)'),
+   ('1','1 (Solved optimally as fast as I can type)'),
+   ('2','2 (Solved in <30 min with few bugs)'),
+   ('3','3 (Solved in 1 hr with some bugs)'),
+   ('4',"4 (Couldn't solve myself, but understood solution)"),
+   ('5',"5 (If interviewer asks this, I'm doomed)"),
 )
 
 class Problem(models.Model):
