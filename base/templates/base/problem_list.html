@@ -24,8 +24,11 @@
     }
 </style>
 
-<div><a href="{% url 'problem-create' %}">Add Problem</a></div> Add stats!
-
+<div><a href="{% url 'problem-create' %}">Add Problem</a></div>
+<div>Easy: {{easy_count}}</div>
+<div>Medium: {{medium_count}}</div>
+<div>Hard: {{hard_count}}</div>
+<div>Total: {{total_count}}</div>
 <!------------------------------ Table ----------------------------------->
 <div>
     <select id="filter-field">

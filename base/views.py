@@ -42,30 +42,35 @@ def problem_list_view(request):
     context = {}
     context['problems'] = Problem.objects.filter(user=user)
     context['problems_json'] = json.dumps(list(context['problems'].values()), cls=DjangoJSONEncoder)
-    
+    context['easy_count'] = Problem.objects.filter(user=user, difficulty='Easy').count()
+    context['medium_count'] = Problem.objects.filter(user=user, difficulty='Medium').count()
+    context['hard_count'] = Problem.objects.filter(user=user, difficulty='Hard').count()
+    context['total_count'] = context['easy_count']+context['medium_count']+context['hard_count']
+
     if request.method == 'POST':
         form = GenerateProblemForm(request.POST)
         if form.is_valid():
             if 'generate' in request.POST:
                 num_problems = request.POST['num-problems']
-                gen_problems(int(num_problems))
+                gen_problems(user, int(num_problems))
             elif 'shift' in request.POST:
-                shift_problems()
+                shift_problems(user)
             return redirect('/')
 
     return render(request, 'base/problem_list.html', context)
 
 #switched to function view because it's easier to add a form to it
-class ProblemList(LoginRequiredMixin, ListView):
-    model = Problem
-    context_object_name = 'problems'
+# class ProblemList(LoginRequiredMixin, ListView):
+#     model = Problem
+#     context_object_name = 'problems'
 
-    #restrict problem list view to user who created it
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['problems'] = context['problems'].filter(user=self.request.user)
-        context['problems_json'] = json.dumps(list(context['problems'].values()), cls=DjangoJSONEncoder)
-        return context
+#     #restrict problem list view to user who created it
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['problems'] = context['problems'].filter(user=self.request.user)
+#         context['problems_json'] = json.dumps(list(context['problems'].values()), cls=DjangoJSONEncoder)
+
+#         return context
 
 class ProblemDetail(LoginRequiredMixin, DetailView):
     model = Problem

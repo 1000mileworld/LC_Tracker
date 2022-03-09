@@ -14,9 +14,9 @@ RULES = {
 
 MAX_DAYS = 90 #program won't generate problems past this number of days in advance
 
-def gen_problems(problems_limit: int) -> None:
-    null_dates = Problem.objects.filter(next_solve__isnull=True)
-    old_dates = Problem.objects.filter(next_solve__lt=date.today())
+def gen_problems(user, problems_limit: int) -> None:
+    null_dates = Problem.objects.filter(user=user, next_solve__isnull=True)
+    old_dates = Problem.objects.filter(user=user, next_solve__lt=date.today())
     problem_list = list(chain(null_dates,old_dates))
     for problem in problem_list:
         add_days = random.randint(RULES[problem.rating][0],RULES[problem.rating][1])
@@ -27,7 +27,7 @@ def gen_problems(problems_limit: int) -> None:
     changed_problems = []
     for i in range(MAX_DAYS):
         day = date.today()+timedelta(days=i)
-        problems_today = Problem.objects.filter(next_solve=day)
+        problems_today = Problem.objects.filter(user=user, next_solve=day)
         move_problems.extend(problems_today[problems_limit:]) #if there are more problems than allowed, append to list
         if move_problems and len(problems_today)<problems_limit:
             count = len(problems_today)
@@ -43,8 +43,8 @@ def gen_problems(problems_limit: int) -> None:
     changed_problems.extend(move_problems)
     Problem.objects.bulk_update(changed_problems, ['next_solve'])
 
-def shift_problems(): #by 1 day
-    has_dates = Problem.objects.filter(next_solve__isnull=False)
+def shift_problems(user): #by 1 day
+    has_dates = Problem.objects.filter(user=user, next_solve__isnull=False)
     for problem in has_dates:
         problem.next_solve = problem.next_solve+timedelta(days=1)
     Problem.objects.bulk_update(has_dates, ['next_solve'])

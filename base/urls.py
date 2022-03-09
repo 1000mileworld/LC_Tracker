@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import ProblemList, ProblemDetail, ProblemCreate, ProblemUpdate, DeleteView, register_view, login_view, problem_list_view, redo_view
+from .views import ProblemDetail, ProblemCreate, ProblemUpdate, DeleteView, register_view, login_view, problem_list_view, redo_view
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    #path('', ProblemList.as_view(), name='problems'),
     path('', problem_list_view, name='problems'),
 
     path('login/', login_view, name='login'),
