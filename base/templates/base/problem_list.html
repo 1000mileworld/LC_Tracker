@@ -36,6 +36,7 @@
       <option value="rating">Self Rating</option>
       <option value="companies">Company</option>
       <option value="last_solved">Last Solved</option>
+      <option value="next_solve">Next Solve</option>
     </select>
   
     <select id="filter-type">
@@ -59,14 +60,14 @@
 <p>Pick how many days you would like to generate problems for and how many problems per day:</p>
 <form method="POST" action="">
     {% csrf_token %}
-    <label for="days">Number of Days</label>
-    <input type="number" name="days" min="1" max="100" required><br>
+    <!-- <label for="days">Number of Days</label>
+    <input type="number" name="days" min="1" max="100" required><br> -->
 
     <label for="num-problems">Number of Problems</label>
     <input type="number" name="num-problems" min="1" max="30" required><br>
 
-    <input type="checkbox" name="today" value="today">
-    <label for="today">Include today?</label><br>
+    <!-- <input type="checkbox" name="today" value="today">
+    <label for="today">Include today?</label><br> -->
 
     <input type="checkbox" name="overwrite" value="overwrite">
     <label for="overwrite">Overwrite existing?</label><br>

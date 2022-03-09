@@ -3,12 +3,15 @@
 // Initialize evo-calendar in your script file or an inline <script> tag
 var calendarData = [];
 var id_link_map = {};
+const d = new Date();
 for (const problem of my_problems) {
+    var problem_date = problem['next_solve'].split('-'); //strange 1 off error if using yyyy-mm-dd
+    var parsed_date = `${problem_date[1]}/${problem_date[2]}/${problem_date[0]}`
     calendarData.push({
         id: problem['id'],
         name: problem['title'],
         description: `#${problem['number']} - ${problem['difficulty']}`,
-        date: problem['last_solved'],
+        date: parsed_date,
         type: problem['difficulty'].toLowerCase()
     })
     id_link_map[problem['id']] = problem['link']

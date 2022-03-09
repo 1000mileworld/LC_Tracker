@@ -32,7 +32,7 @@ class ProblemCreateForm(forms.ModelForm):
 class ProblemUpdateForm(forms.ModelForm):
     class Meta:
         model = Problem
-        exclude = ('user','next_solve') #specifies what fields from the model not to include in the form.
+        exclude = ('user',) #specifies what fields from the model not to include in the form.
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')

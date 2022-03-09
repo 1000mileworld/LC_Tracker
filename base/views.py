@@ -15,6 +15,8 @@ from django.http import HttpResponseRedirect
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
+from .func import gen_problems
+
 def redo_view(request, pk):
     user = request.user
     if not user.is_authenticated:
@@ -34,14 +36,15 @@ def problem_list_view(request):
     if request.method == 'POST':
         form = GenerateProblemForm(request.POST)
         if form.is_valid():
-            days = request.POST['days']
+            #days = request.POST['days']
             num_problems = request.POST['num-problems']
-            if 'today' in request.POST:
-                print('today checked')
-            else:
-                print('do not include today')
+            gen_problems(num_problems, False)
+            # if 'today' in request.POST:
+            #     print('today checked')
+            # else:
+            #     print('do not include today')
             
-            print(days, num_problems)
+            #print(days, num_problems)
             return redirect('/')
 
     return render(request, 'base/problem_list.html', context)

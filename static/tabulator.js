@@ -46,6 +46,7 @@ var table = new Tabulator("#problem-table", {
     {title:"Self Rating", field:"rating"},
     {title:"Company", field:"companies"},
     {title:"Last Solved", field:"last_solved"},
+    {title:"Next Solve", field:"next_solve"},
 
         // {title:"Age", field:"age", hozAlign:"left", formatter:"progress"},
         // {title:"Favourite Color", field:"col"},
