@@ -5,8 +5,14 @@ var calendarData = [];
 var id_link_map = {};
 const d = new Date();
 for (const problem of my_problems) {
-    var problem_date = problem['next_solve'].split('-'); //strange 1 off error if using yyyy-mm-dd
-    var parsed_date = `${problem_date[1]}/${problem_date[2]}/${problem_date[0]}`
+    var parsed_date;
+    if (problem['next_solve']){
+        var problem_date = problem['next_solve'].split('-'); //strange 1 off error if using yyyy-mm-dd
+        parsed_date = `${problem_date[1]}/${problem_date[2]}/${problem_date[0]}`
+    }else{
+        parsed_date = null
+    }
+    
     calendarData.push({
         id: problem['id'],
         name: problem['title'],

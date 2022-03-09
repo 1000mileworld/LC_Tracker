@@ -38,7 +38,7 @@ def problem_list_view(request):
         if form.is_valid():
             #days = request.POST['days']
             num_problems = request.POST['num-problems']
-            gen_problems(num_problems, False)
+            gen_problems(int(num_problems), False)
             # if 'today' in request.POST:
             #     print('today checked')
             # else:
