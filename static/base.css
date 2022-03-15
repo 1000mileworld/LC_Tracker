@@ -3,16 +3,47 @@ body{
     display: flex;
     flex-flow: column;
 }
-
-header{
-    padding: 15px;
+a {
+    text-decoration: none;
 }
-
 .content {
-    background-color: #EEEAE9;
+    background-color: hsl(216,10%,30%);
     flex: 1
 }
-
+.stats {
+    margin: 10px auto;
+    padding: 5px;
+    background-color: #6CCBDA;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.stats a {
+    color: white; 
+}
+.stats-difficulty {
+    font-weight: 700;
+    background-color: #D3DCDE;
+}
+.stats-difficulty-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+.table-filter {
+    margin: 10px auto;
+}
+.table-filter select, .table-filter input {
+    height: 30px;
+}
+.calendar-description {
+    color: white;
+    margin: 10px auto;
+}
+#generate-form label {
+    color: white;
+}
+#calendar {
+    margin: 10px auto;
+}
 footer{
     margin-top: auto;
     padding: 20px;
@@ -20,7 +51,6 @@ footer{
     text-align: center;
     border: 1px solid;
 }
-
 .errorlist {
     display: none;
 }

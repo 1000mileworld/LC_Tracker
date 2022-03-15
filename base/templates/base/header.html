@@ -1,12 +1,68 @@
+<style>
+    header {
+        padding: 15px;
+        background-color: #192435;
+    }
+    header .tagline {
+        color: white;
+    }
+    header button {
+        height: 50px;
+        align-self: center;
+        background-color: #00adb5;
+    }
+    header button a {
+        color: white;
+    }
+    header a, .nav-link {
+        color: #00adb5;
+        text-decoration: none;
+    }
+    .nav-head {
+        display: flex;
+        justify-content: space-between;
+    }
+    a:hover, .nav-link:hover {
+        color: #33FFF0;
+    }
+    .nav-link:focus {
+        color: #33FFF0;
+    }
+    .dropdown-menu {
+        background-color: #00adb5;
+    }
+    .dropdown-item {
+        color: white
+    }
+    .dropdown-item:hover{
+        background-color: #33FFF0;
+    }
+</style>
+
 <header>
     {% if request.user.is_authenticated %}
-        <div><h1>Welcome <a href="{% url 'problems' %}">{{request.user}}</a></h1></div>
-        <div><a href="{% url 'password_change' %}">Change Password</a></div>
-        <div><a href="{% url 'logout' %}">Logout</a></div>
+    <nav class="nav-head">
+        <a class="navbar-brand" href="{% url 'problems' %}">Welcome {{request.user}}</a>
         
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>        
     {% else %}
-        <div><a href="/"><h1>Elite Coder</h1></a></div>
-        <div>Track your Leetcode progress and solidify your problem-solving foundation through spaced repetition.</div>
-        <a href="{% url 'register' %}"><button>Create Account</button></a>
+    <nav class="nav-head">
+        <div>
+            <a href="/"><h1>Elite Coder</h1></a>
+            <div class="tagline">Track your Leetcode progress and solidify your problem-solving foundation through spaced repetition.</div>
+        </div>
+        <button><a href="{% url 'register' %}">Create Account</a></button>
+    </nav>
     {% endif %}	
 </header>

@@ -1,7 +1,9 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<link href="https://unpkg.com/tabulator-tables@5.1.2/dist/css/tabulator.min.css" rel="stylesheet">
+<!-- <link href="https://unpkg.com/tabulator-tables@5.1.2/dist/css/tabulator.min.css" rel="stylesheet"> -->
+{% load static %}
+<link href="{% static 'tabulator.css' %}" rel="stylesheet">
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.1.2/dist/js/tabulator.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.1.1/luxon.min.js" integrity="sha512-R3qVfQx4LUWixeZgtptH0NDb+/FB8qVflpPQUKzDQlz1zKE3BiN4wG3aBUwzabgMo/45MXHucjcC2/BWBxMJwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -24,51 +26,59 @@
     }
 </style>
 
-<div><a href="{% url 'problem-create' %}">Add Problem</a></div>
-<div>Easy: {{easy_count}}</div>
-<div>Medium: {{medium_count}}</div>
-<div>Hard: {{hard_count}}</div>
-<div>Total: {{total_count}}</div>
-<!------------------------------ Table ----------------------------------->
-<div>
-    <select id="filter-field">
-      <option value="number">Number</option>
-      <option value="title" selected>Title</option>
-      <option value="difficulty">Difficulty</option>
-      <option value="categories">DS/Algo</option>
-      <option value="rating">Self Rating</option>
-      <option value="companies">Company</option>
-      <option value="last_solved">Last Solved</option>
-      <option value="next_solve">Next Solve</option>
-    </select>
-  
-    <select id="filter-type">
-      <option value="like">like</option>
-      <option value="=">=</option>
-      <option value="<"><</option>
-      <option value="<="><=</option>
-      <option value=">">></option>
-      <option value=">=">>=</option>
-      <option value="!=">!=</option>
-    </select>
-  
-    <input id="filter-value" type="text" placeholder="value to filter">
-  
-    <button id="filter-clear">Clear Filter</button>
+<div class="container">
+    <div class="stats row" align="center">
+        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: green;">Easy</span>: {{easy_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: orange;">Medium</span>: {{medium_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: red;">Hard</span>: {{hard_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty">Total</span>: {{total_count}}</span></div>
+        <div class="col-md"><button class="btn btn-primary"><a href="{% url 'problem-create' %}">Add Problem</a></button></div>
+    </div>
+    <!-- <div>Easy: {{easy_count}}</div>
+    <div>Medium: {{medium_count}}</div>
+    <div>Hard: {{hard_count}}</div>
+    <div>Total: {{total_count}}</div>
+    <div><a href="{% url 'problem-create' %}">Add Problem</a></div> -->
+    <!------------------------------ Table ----------------------------------->
+    <div class="table-filter">
+        <select id="filter-field">
+        <option value="number">Number</option>
+        <option value="title" selected>Title</option>
+        <option value="difficulty">Difficulty</option>
+        <option value="categories">DS/Algo</option>
+        <option value="rating">Self Rating</option>
+        <option value="companies">Company</option>
+        <option value="last_solved">Last Solved</option>
+        <option value="next_solve">Next Solve</option>
+        </select>
+    
+        <select id="filter-type">
+        <option value="like">like</option>
+        <option value="=">=</option>
+        <option value="<"><</option>
+        <option value="<="><=</option>
+        <option value=">">></option>
+        <option value=">=">>=</option>
+        <option value="!=">!=</option>
+        </select>
+    
+        <input id="filter-value" type="text" placeholder="value to filter">
+    
+        <button id="filter-clear">Clear Filter</button>
+    </div>
+    <div id="problem-table"></div>
+
+    <!------------------------------ Calendar ----------------------------------->
+    <div class="calendar-description">Pick the max number of problems you would like to do per day. Any days (including today) with more problems than the limit will be rebalanced. Any unsolved problems which was scheduled for days past will be given a new solve date. If you need to take a break today, you can shift all problems forward 1 day.</div>
+    <form method="POST" action="" id="generate-form">
+        {% csrf_token %}
+        <label for="num-problems">Max Problems</label>
+        <input id="problem-limit" type="number" name="num-problems" min="1" max="30" required>
+        <input class="btn btn-warning" type="submit" name="generate" value="Generate">
+        <input class="btn btn-danger" type="submit" name="shift" value="+1 Day" id="shift-button">
+    </form>
+    <div id="calendar"></div>
 </div>
-<div id="problem-table"></div>
-
-<!------------------------------ Calendar ----------------------------------->
-<p>Pick the max number of problems you would like to do per day. Any days (including today) with more problems than the limit will be rebalanced. Any unsolved problems which was scheduled for days past will be given a new solve date. If you need to take a break today, you can shift all problems forward 1 day.</p>
-<form method="POST" action="" id="generate-form">
-    {% csrf_token %}
-    <label for="num-problems">Max Problems</label>
-    <input id="problem-limit" type="number" name="num-problems" min="1" max="30" required><br>
-
-    <input class="button" type="submit" name="generate" value="Generate">
-    <input class="button" type="submit" name="shift" value="+1 Day" id="shift-button">
-</form>
-<div id="calendar"></div>
 
 <script>
     const my_problems = {{problems_json | safe}}
