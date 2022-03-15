@@ -34,7 +34,7 @@ table.clearFilter();
 
 //create Tabulator on DOM element
 var table = new Tabulator("#problem-table", {
-    //height:250, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+    height:465, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
     
     initialSort:[
         {column:"last_solved", dir:"desc"}, //sort by this first
@@ -57,7 +57,7 @@ var table = new Tabulator("#problem-table", {
         // {title:"Date Of Birth", field:"dob", sorter:"date"},
     ],
     pagination:true,
-    paginationSize:10,
+    //paginationSize:10,
 });
 
 table.on('rowClick', (e, row) => {

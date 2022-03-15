@@ -1,0 +1,27 @@
+.errorlist {
+    display: none;
+}
+.form-small {
+    max-width: 400px;
+    margin: 80px auto;
+    background: linear-gradient(to bottom right, hsl(216,35%,65%), hsl(216,35%,15%));
+    border-radius: 5px 5px 0 0;
+}
+.form-small a {
+    color: #00adb5;
+}
+.header-bar {
+    background: linear-gradient(to bottom right, hsl(183,97%,80%), hsl(183,97%,30%));
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+.card-body {
+    padding: 20px;
+}
+.card-body input {
+    margin: 10px auto;
+}
+.card-body button {
+    margin-bottom: 10px;
+}

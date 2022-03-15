@@ -13,7 +13,7 @@ a {
 .stats {
     margin: 10px auto;
     padding: 5px;
-    background-color: #6CCBDA;
+    background-color: #00dee8;
     border-radius: 10px;
     font-size: 18px;
 }
@@ -39,18 +39,20 @@ a {
     margin: 10px auto;
 }
 #generate-form label {
-    color: white;
+    color: #00adb5;
+    font-size: 18px;
+    font-weight: 700;
+}
+#generate-form input {
+    margin: 2px;
 }
 #calendar {
     margin: 10px auto;
 }
 footer{
-    margin-top: auto;
     padding: 20px;
     min-height: 60px;
     text-align: center;
-    border: 1px solid;
-}
-.errorlist {
-    display: none;
+    background-color: #192435;
+    color: white;
 }
