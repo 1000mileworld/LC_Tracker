@@ -28,17 +28,12 @@
 
 <div class="container">
     <div class="stats row" align="center">
-        <div class="col-md"><span class="stats-difficulty" style="color: green;">Easy: {{easy_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty" style="color: orange;">Medium: {{medium_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty" style="color: red;">Hard: {{hard_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty">Total: {{total_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="background-color: green;">Easy: {{easy_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="background-color: orange;">Medium: {{medium_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="background-color: red;">Hard: {{hard_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="background-color: #192435;">Total: {{total_count}}</span></div>
         <div class="col-md"><button class="btn btn-primary"><a href="{% url 'problem-create' %}">Add Problem</a></button></div>
     </div>
-    <!-- <div>Easy: {{easy_count}}</div>
-    <div>Medium: {{medium_count}}</div>
-    <div>Hard: {{hard_count}}</div>
-    <div>Total: {{total_count}}</div>
-    <div><a href="{% url 'problem-create' %}">Add Problem</a></div> -->
     <!------------------------------ Table ----------------------------------->
     <div class="table-filter">
         <select id="filter-field">
@@ -70,7 +65,7 @@
     <div id="problem-table"></div>
 
     <!------------------------------ Calendar ----------------------------------->
-    <div class="calendar-description">Pick the max number of problems you would like to do per day. Any days (including today) with more problems than the limit will be rebalanced. Any unsolved problems which was scheduled for days past will be given a new solve date. If you need to take a break today, you can shift all problems forward 1 day.</div>
+    <div class="calendar-description">Pick the max number of problems you would like to do per day. Harder problems will be prioritized over easier ones. Any days (including today) with more problems than the limit will be rebalanced. Any unsolved problems which was scheduled for days past will be given a new solve date. If you need to take a break today, you can shift all problems forward 1 day.</div>
     <form method="POST" action="" id="generate-form">
         {% csrf_token %}
         <label for="num-problems">Max Problems</label>

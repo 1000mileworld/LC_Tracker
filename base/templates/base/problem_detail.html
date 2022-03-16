@@ -1,23 +1,26 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="header-bar">
-    <a href="{% url 'problems' %}">&#8592; Go Back</a>
+<div class="form-small">
+    <div class="header-bar">
+        <h2>{{problem}}</h2>
+    </div>
+
+    <div class="card-body">
+        <div class="detail-item"><span class="detail-item-name">Link:</span> <a href={{problem.link}} target="_blank">Go to Leetcode</a></div>
+        <div class="detail-item"><span class="detail-item-name">Difficulty:</span> {{problem.difficulty}}</div>
+        <div class="detail-item"><span class="detail-item-name">Self Difficulty Rating:</span> {{problem.rating}}</div>
+        <div class="detail-item"><span class="detail-item-name">Category Tags:</span> {{problem.categories}}</div>
+        <div class="detail-item"><span class="detail-item-name">Company Tags:</span> {{problem.companies}}</div>
+        <div class="detail-item"><span class="detail-item-name">Notes:</span> {{problem.notes}}</div>
+        <div class="detail-item"><span class="detail-item-name">Last Solved Date:</span> {{problem.last_solved}}</div>
+        <div class="detail-item"><span class="detail-item-name">Next Solve Date:</span> {{problem.next_solve}}</div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button style="margin-right: 10px;" class="btn btn-primary"><a href="{% url 'problem-update' problem.id %}">Edit</a></button>
+            <button class="btn btn-danger"><a href="{% url 'problem-delete' problem.id %}">Delete</a></button>
+        </div>
+        <p><a href="{% url 'problems' %}">&#8592; Go Back</a></p>
+    </div>
 </div>
-
-
-<div class="card-body">
-    <h1>{{problem}}</h1>
-    <a href={{problem.link}} target="_blank">Go to Problem</a>
-    <div>Difficulty: {{problem.difficulty}}</div>
-    <div>Self Difficulty Rating: {{problem.rating}}</div>
-    <div>Category Tags: {{problem.categories}}</div>
-    <div>Company Tags: {{problem.companies}}</div>
-    <div>Notes: {{problem.notes}}</div>
-    <div>Last Solved Date: {{problem.last_solved}}</div>
-    <div>Next Solve Date: {{problem.next_solve}}</div>
-    <a href="{% url 'problem-update' problem.id %}">Edit</a>
-    <a href="{% url 'problem-delete' problem.id %}">Delete</a>
-</div>
-
 {% endblock content %}

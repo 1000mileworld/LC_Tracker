@@ -1,3 +1,4 @@
+from ast import Str
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -22,7 +23,10 @@ def redo_view(request, pk):
     if not user.is_authenticated:
         return redirect('login')
 
-    context = {}
+    redo_problem = Problem.objects.get(user=user,pk=pk)
+    context = {
+        'problem': redo_problem,
+    }
     if request.method == 'POST':
         form = ConfirmRedoForm(request.POST, user=user, id=pk)
         if form.is_valid():

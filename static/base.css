@@ -22,9 +22,13 @@ a {
 }
 .stats-difficulty {
     font-weight: 700;
-    background-color: #D3DCDE;
+    color: white;
     display: inline-block;
     vertical-align: middle;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    margin: 5px;
 }
 .table-filter {
     margin: 10px auto;

@@ -1,0 +1,38 @@
+header {
+    padding: 15px;
+    background-color: #192435;
+}
+header .tagline {
+    color: white;
+}
+header button {
+    height: 50px;
+    align-self: center;
+    background-color: #00adb5;
+}
+header button a {
+    color: white;
+}
+header a, .nav-link {
+    color: #00adb5;
+    text-decoration: none;
+}
+.nav-head {
+    display: flex;
+    justify-content: space-between;
+}
+a:hover, .nav-link:hover {
+    color: #33FFF0;
+}
+.nav-link:focus {
+    color: #33FFF0;
+}
+.dropdown-menu {
+    background-color: #00adb5;
+}
+.dropdown-item {
+    color: white
+}
+.dropdown-item:hover{
+    background-color: #33FFF0;
+}

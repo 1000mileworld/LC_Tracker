@@ -1,26 +1,93 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="header-bar">
-    <a href="{% url 'problems' %}">&#8592; Back</a>
-</div>
+<div class="form-small form-big">
+    <div class="header-bar">
+        <h2>Problem</h2>
+    </div>
 
-<div class="card-body">
-    <form method="POST" action="">
-        <!-- default object: form -->
-        <!-- form.as_p puts form fields in paragraph tags -->
-        {% csrf_token %}
-        {{form.as_p}}
+    <div class="card-body">
+        <form method="POST" action="">
+            <!-- default object: form -->
+            <!-- form.as_p puts form fields in paragraph tags -->
+            {% csrf_token %}
+            {{form}}
+            <!-- <label for="id_number">Number:</label>
+            <input type="number" name="number" min="0" required id="id_number" class="form-control" autofocus>
 
-        {% for field in form %}
-            <p>
-            {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
+            <label for="id_title">Title:</label>
+            <input type="text" name="title" maxlength="100" required id="id_title" class="form-control">
+
+            <label for="id_link">Link:</label>
+            <input type="url" name="link" maxlength="500" required id="id_link" class="form-control" placeholder="https://leetcode.com/problems/problem-title/">
+
+            <label for="id_difficulty">Difficulty:</label>
+            <select name="difficulty" id="id_difficulty" class="form-select">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+
+            <label for="id_rating">Self Difficulty Rating:</label>
+            <select name="rating" id="id_rating" class="form-select">
+                <option value="1">1 (Solved optimally as fast as I can type)</option>
+                <option value="2">2 (Solved in &lt;30 min with few bugs)</option>
+                <option value="3" selected>3 (Solved in 1 hr with some bugs)</option>
+                <option value="4">4 (Couldn&#x27;t solve myself, but understood solution)</option>
+                <option value="5">5 (If interviewer asks this, I&#x27;m doomed)</option>
+            </select>
+
+            <label for="id_categories">Category Tags (comma separated):</label>
+            <textarea name="categories" cols="40" rows="10" id="id_categories" class="form-control" placeholder="Sliding Window, Two Pointers, Dynamic Programming (DP), Breadth First Search (BFS), Depth First Search (DFS), etc."></textarea>
+
+            <label for="id_companies">Company Tags (comma separated):</label>
+            <textarea name="companies" cols="40" rows="10" id="id_companies" class="form-control" placeholder="Facebook, Google, Amazon, etc."></textarea>
+
+            <label for="id_notes">Notes:</label>
+            <textarea name="notes" cols="40" rows="10" id="id_notes" class="form-control" placeholder="Write down any notes that may help you solve the problem if you were to see it again."></textarea>
+
+            <label for="id_last_solved">Last solved:</label>
+            <input type="text" name="last_solved" value="2022-03-16" required id="id_last_solved" class="form-control" placeholder="YYYY-MM-DD">
+            <input type="hidden" name="initial-last_solved" value="2022-03-16" id="initial-id_last_solved"> -->
+            
+            {% for field in form %}
+                <p>
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                </p>
             {% endfor %}
-            </p>
-        {% endfor %}
 
-        <input class="button" type="submit" value="Submit"/>
-    </form>
+            <!-- <input class="button" type="submit" value="Submit"/> -->
+            <button class="btn btn-primary" type="submit">Save problem</button>
+        </form>
+        <p><a href="{% url 'problems' %}">&#8592; Back</a></p>
+    </div>
 </div>
+
+<script>
+    document.getElementById('id_number').classList.add('form-control')
+    document.getElementById('id_title').classList.add('form-control')
+
+    document.getElementById('id_link').classList.add('form-control')
+    document.getElementById('id_link').setAttribute('placeholder','https://leetcode.com/problems/problem-title/')
+
+    document.getElementById('id_difficulty').classList.add('form-select')
+    document.getElementById('id_rating').classList.add('form-select')
+
+    document.getElementById('id_categories').classList.add('form-control')
+    document.getElementById('id_categories').setAttribute('placeholder','Example: Sliding Window, Two Pointers, Dynamic Programming (DP), Breadth First Search (BFS), Depth First Search (DFS), etc.')
+
+    document.getElementById('id_companies').classList.add('form-control')
+    document.getElementById('id_companies').setAttribute('placeholder','Example: Facebook, Google, Amazon, etc.')
+
+    document.getElementById('id_notes').classList.add('form-control')
+    document.getElementById('id_notes').setAttribute('placeholder','Write down any notes that may help you solve the problem if you were to see it again.')
+
+    document.getElementById('id_last_solved').classList.add('form-control')
+
+    if (document.getElementById('id_next_solve')){
+        document.getElementById('id_next_solve').classList.add('form-control')
+    }
+</script>
 {% endblock content %}

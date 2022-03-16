@@ -7,10 +7,10 @@
     background: linear-gradient(to bottom right, hsl(216,35%,65%), hsl(216,35%,15%));
     border-radius: 5px 5px 0 0;
 }
-.form-small a {
+.form-small a, .form-big a {
     color: #33FFF0;
 }
-.form-small a:hover {
+.form-small a:hover, .form-big a:hover {
     color: #00adb5;
 }
 .header-bar {
@@ -22,12 +22,28 @@
 .card-body {
     padding: 20px;
 }
-.card-body input {
-    margin: 10px auto;
+input, textarea, select {
+    margin-top: 2px;
+    margin-bottom: 10px;
 }
 .card-body button {
     margin-bottom: 10px;
 }
-.card-body p{
+.card-body p, .card-body label{
     color: white;
+}
+.card-body .detail-item {
+    margin: 10px auto;
+    color: white;
+}
+.card-body .detail-item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: hsl(0,0%,80%);
+}
+.form-big {
+    max-width: 800px;
+}
+.form-big textarea {
+    height: 80px;
 }
