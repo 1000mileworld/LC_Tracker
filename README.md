@@ -11,6 +11,7 @@ Track LeetCode progress and hone your skills through spaced repetition:
 - Keep track of progress with table that can be sorted and filtered by column
 - Beautiful calendar with color-coding by difficulty provides visual cue on what problems to do for each day
 - User registration, login, password change, and reset
+- Export data as CSV
 
 ## External
 - Bootstrap
