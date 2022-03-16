@@ -1,7 +1,7 @@
 # Elite Coder
 Track LeetCode progress and hone your skills through spaced repetition:
 
-[https://elite-coder.herokuapp.com/](https:/elite-coder.herokuapp.com/)
+[https://elite-coder.herokuapp.com/](https://elite-coder.herokuapp.com/)
 
 ## Features
 - Generate number of problems you would like to review per day
