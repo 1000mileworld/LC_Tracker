@@ -38,7 +38,7 @@ input, textarea, select {
 }
 .card-body .detail-item-name {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 800;
     color: hsl(0,0%,80%);
 }
 .form-big {
