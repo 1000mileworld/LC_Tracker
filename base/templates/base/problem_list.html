@@ -28,10 +28,10 @@
 
 <div class="container">
     <div class="stats row" align="center">
-        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: green;">Easy</span>: {{easy_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: orange;">Medium</span>: {{medium_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty" style="color: red;">Hard</span>: {{hard_count}}</span></div>
-        <div class="col-md"><span class="stats-difficulty-wrapper"><span class="stats-difficulty">Total</span>: {{total_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="color: green;">Easy: {{easy_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="color: orange;">Medium: {{medium_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty" style="color: red;">Hard: {{hard_count}}</span></div>
+        <div class="col-md"><span class="stats-difficulty">Total: {{total_count}}</span></div>
         <div class="col-md"><button class="btn btn-primary"><a href="{% url 'problem-create' %}">Add Problem</a></button></div>
     </div>
     <!-- <div>Easy: {{easy_count}}</div>
@@ -65,6 +65,7 @@
         <input id="filter-value" type="text" placeholder="value to filter">
     
         <button id="filter-clear">Clear Filter</button>
+        <button id="download-csv">Download CSV</button>
     </div>
     <div id="problem-table"></div>
 

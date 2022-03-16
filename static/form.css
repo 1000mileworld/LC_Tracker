@@ -8,6 +8,9 @@
     border-radius: 5px 5px 0 0;
 }
 .form-small a {
+    color: #33FFF0;
+}
+.form-small a:hover {
     color: #00adb5;
 }
 .header-bar {
@@ -24,4 +27,7 @@
 }
 .card-body button {
     margin-bottom: 10px;
+}
+.card-body p{
+    color: white;
 }

@@ -23,8 +23,6 @@ a {
 .stats-difficulty {
     font-weight: 700;
     background-color: #D3DCDE;
-}
-.stats-difficulty-wrapper {
     display: inline-block;
     vertical-align: middle;
 }

@@ -25,11 +25,10 @@ document.getElementById("filter-value").addEventListener("keyup", updateFilter);
 
 //Clear filters on "Clear Filters" button click
 document.getElementById("filter-clear").addEventListener("click", function(){
-fieldEl.value = "title";
-typeEl.value = "like";
-valueEl.value = "";
-
-table.clearFilter();
+    fieldEl.value = "title";
+    typeEl.value = "like";
+    valueEl.value = "";
+    table.clearFilter();
 });
 
 //create Tabulator on DOM element
@@ -63,3 +62,8 @@ var table = new Tabulator("#problem-table", {
 table.on('rowClick', (e, row) => {
     location.href = `problem/${row.getData().id}/`;
 })
+
+//trigger download of data.csv file
+document.getElementById("download-csv").addEventListener("click", function(){
+    table.download("csv", "data.csv");
+});
