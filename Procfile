@@ -1,1 +1,1 @@
-web gunicorn urlshortener.wsgi:application --log-file -
+web gunicorn LC_Tracker.wsgi:application --log-file -
