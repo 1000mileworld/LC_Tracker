@@ -85,9 +85,11 @@
     document.getElementById('id_notes').setAttribute('placeholder','Write down any notes that may help you solve the problem if you were to see it again.')
 
     document.getElementById('id_last_solved').classList.add('form-control')
+    document.getElementById('id_last_solved').setAttribute('placeholder','YYYY-MM-DD')
 
     if (document.getElementById('id_next_solve')){
         document.getElementById('id_next_solve').classList.add('form-control')
+        document.getElementById('id_next_solve').setAttribute('placeholder','YYYY-MM-DD')
     }
 </script>
 {% endblock content %}
