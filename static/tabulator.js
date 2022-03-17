@@ -44,6 +44,7 @@ var table = new Tabulator("#problem-table", {
     columns:[ //Define Table Columns
     {title:"Number", field:"number"},    
     {title:"Title", field:"title"},
+    {title:"Link", field:"link"},
     {title:"Difficulty", field:"difficulty"},
     {title:"Self Rating", field:"rating"},
     {title:"DS/Algo", field:"categories"},
