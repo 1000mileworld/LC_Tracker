@@ -5,7 +5,7 @@ User = settings.AUTH_USER_MODEL
 
 #from django.core.validators import MinValueValidator
 #from django.contrib.postgres.fields import ArrayField #only for Postgres
-from datetime import date
+from datetime import datetime as dt
 DIFFICULTY_CHOICES = (
     ('Easy','Easy'),
     ('Medium', 'Medium'),
@@ -31,7 +31,7 @@ class Problem(models.Model):
    categories = models.TextField(default='', verbose_name="Category Tags (comma separated)", blank=True)
    companies = models.TextField(default='', verbose_name="Company Tags (comma separated)", blank=True)
    notes = models.TextField(default='', blank=True)
-   last_solved = models.DateField(default=date.today)
+   last_solved = models.DateField(default=dt.now().date())
    next_solve = models.DateField(null=True, blank=True)
 
    def __str__(self):
